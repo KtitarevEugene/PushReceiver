@@ -3,7 +3,12 @@ package com.smartru.pushreceiver;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.widget.RemoteViews;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 /**
  * Implementation of App Widget functionality.
@@ -15,8 +20,8 @@ public class main_widget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
-        final int N = appWidgetIds.length;
-        for (int i = 0; i < N; i++) {
+        final int widgetsCount = appWidgetIds.length;
+        for (int i = 0; i < widgetsCount; ++i) {
             updateAppWidget(context, appWidgetManager, appWidgetIds[i]);
         }
     }
@@ -34,7 +39,20 @@ public class main_widget extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
+        int googleApiAvaibilityResult = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context);
 
+        switch(googleApiAvaibilityResult) {
+            case ConnectionResult.SUCCESS:
+                context.startService(new Intent(context, FirebaseNotificationInstanceIDService.class));
+                context.startService(new Intent(context, FirebaseNotificationService.class));
+                break;
+            case ConnectionResult.SERVICE_MISSING:
+                break;
+            case ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED:
+                break;
+            case ConnectionResult.SERVICE_DISABLED:
+                break;
+        }
     }
 }
 

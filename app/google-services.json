@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "547644329896",
+    "firebase_url": "https://pushreceiver-175107.firebaseio.com",
+    "project_id": "pushreceiver-175107",
+    "storage_bucket": "pushreceiver-175107.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:547644329896:android:19305e97b1c96a85",
+        "android_client_info": {
+          "package_name": "com.smartru.pushreceiver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "547644329896-99djfp684bssvf57nafl81dud5vd4j19.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgUyKTIkGhOrPvsNhff916-aMs3oOUC3k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
