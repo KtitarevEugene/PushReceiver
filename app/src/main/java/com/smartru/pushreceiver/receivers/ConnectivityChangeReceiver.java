@@ -1,4 +1,4 @@
-package receivers;
+package com.smartru.pushreceiver.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,6 +10,9 @@ import android.preference.PreferenceManager;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.smartru.pushreceiver.FirebaseNotificationInstanceIDService;
+import com.smartru.pushreceiver.http.ApiClient;
+import com.smartru.pushreceiver.http.BaseResponse;
+import com.smartru.pushreceiver.models.TokenModel;
 
 public class ConnectivityChangeReceiver extends BroadcastReceiver {
 
@@ -23,11 +26,17 @@ public class ConnectivityChangeReceiver extends BroadcastReceiver {
                     pref.getString(FirebaseNotificationInstanceIDService.TOKEN, "") == "") {
 
                 String token = FirebaseInstanceId.getInstance().getToken();
-
-                // TODO send token to api server
-
-                pref.edit().putString(FirebaseNotificationInstanceIDService.TOKEN, token);
-                pref.edit().putBoolean(FirebaseNotificationInstanceIDService.IS_CONNECTED, true);
+                if (token != null) {
+                    BaseResponse response = ApiClient.sendToken(token, BaseResponse.class);
+                    if (response.status == 200) {
+                        pref.edit().putBoolean(FirebaseNotificationInstanceIDService.IS_CONNECTED, true).apply();
+                    } else {
+                        pref.edit().putBoolean(FirebaseNotificationInstanceIDService.IS_CONNECTED, false).apply();
+                    }
+                } else {
+                    pref.edit().putBoolean(FirebaseNotificationInstanceIDService.IS_CONNECTED, false).apply();
+                }
+                pref.edit().putString(FirebaseNotificationInstanceIDService.TOKEN, token).apply();
             }
         }
     }

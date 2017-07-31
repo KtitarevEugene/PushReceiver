@@ -1,4 +1,4 @@
-package helpers;
+package com.smartru.pushreceiver.helpers;
 
 import android.app.Notification;
 import android.app.PendingIntent;

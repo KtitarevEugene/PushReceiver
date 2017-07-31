@@ -1,4 +1,4 @@
-package models;
+package com.smartru.pushreceiver.models;
 
 /**
  * Created by ektitarev on 31.07.17.

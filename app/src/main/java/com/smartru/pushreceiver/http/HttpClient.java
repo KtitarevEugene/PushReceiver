@@ -1,4 +1,4 @@
-package http;
+package com.smartru.pushreceiver.http;
 
 import android.util.Log;
 
@@ -10,12 +10,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
-import java.util.Objects;
 
 /**
  * Created by ektitarev on 31.07.17.
@@ -26,7 +22,7 @@ public class HttpClient<V, T> {
 
     static final int TIMEOUT = 60000;
 
-    public V sendPostRequest (String urlString, T data) {
+    public V sendPostRequest (String urlString, T data, Class classObj) {
         V response = null;
         try {
             URL url = new URL(urlString);
@@ -34,10 +30,9 @@ public class HttpClient<V, T> {
             HttpURLConnection connection = getHttpURLConnection(url);
             writeRequest(connection, serializeJson(data));
 
-            response = deserializeJson(readResponse(connection));
+            response = (V)deserializeJson(readResponse(connection), classObj);
 
         } catch (Exception e) {
-            Log.e(LOGCAT, e.getMessage());
             e.printStackTrace();
         }
 
@@ -57,13 +52,13 @@ public class HttpClient<V, T> {
         return connection;
     }
 
-    private String serializeJson(T data) {
+    private String serializeJson(Object data) {
         return new Gson().toJson(data, data.getClass());
     }
 
-    private V deserializeJson(String json) {
+    private V deserializeJson(String json, Class<V> tClass) {
         //FIXME java.lang.ClassCastException here
-        return new Gson().fromJson(json, (Class<V>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
+        return new Gson().fromJson(json, tClass);
     }
 
     private void writeRequest(HttpURLConnection connection, String json) throws IOException {

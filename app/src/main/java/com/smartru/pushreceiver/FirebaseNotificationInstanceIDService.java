@@ -10,10 +10,8 @@ import android.util.Log;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
-import java.util.prefs.Preferences;
-
-import http.ApiClient;
-import http.BaseResponse;
+import com.smartru.pushreceiver.http.ApiClient;
+import com.smartru.pushreceiver.http.BaseResponse;
 
 /**
  * Created by ektitarev on 28.07.17.
@@ -44,7 +42,7 @@ public class FirebaseNotificationInstanceIDService extends FirebaseInstanceIdSer
 
         if (networkInfo != null && networkInfo.isConnected() && token != "") {
 
-            BaseResponse response = ApiClient.sendToken(token);
+            BaseResponse response = ApiClient.sendToken(token, BaseResponse.class);
             if (response.status == 200) {
                 pref.edit().putBoolean(IS_CONNECTED, true).apply();
             } else {
