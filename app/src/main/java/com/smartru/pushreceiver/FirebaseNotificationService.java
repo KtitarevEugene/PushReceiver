@@ -15,10 +15,10 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        //super.onMessageReceived(remoteMessage);
-
+        super.onMessageReceived(remoteMessage);
 
         Log.d(LOGCAT, "message received : " + remoteMessage.getNotification().getBody());
 
+        // TODO retrieve 'message' and 'url' and make local notification
     }
 }

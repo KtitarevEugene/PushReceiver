@@ -1,14 +1,20 @@
 package com.smartru.pushreceiver;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+
+import helpers.NotificationHelper;
 
 /**
  * Implementation of App Widget functionality.
@@ -53,6 +59,13 @@ public class main_widget extends AppWidgetProvider {
             case ConnectionResult.SERVICE_DISABLED:
                 break;
         }
+
+        String longText = "From Android Developer web site: Caution: If there are no apps on the device that can receive the implicit intent, your app will crash when it calls startActivity(). To first verify that an app exists to receive the intent, call resolveActivity() on your Intent object. If the result is non-null, there is at least one app that can handle the intent and it's safe to call startActivity(). If the result is null, you should not use the intent and, if possible, you should disable the feature that invokes the intent. ";
+        String url = "http://yandex.ru";
+
+        Notification notification = NotificationHelper.makeNotification(context, longText, url);
+        NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(0, notification);
     }
 }
 

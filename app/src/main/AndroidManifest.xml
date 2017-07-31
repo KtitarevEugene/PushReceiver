@@ -12,18 +12,14 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-
-        <service
-            android:name=".FirebaseNotificationService">
+        <service android:name=".FirebaseNotificationService" >
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <service
-            android:name=".FirebaseNotificationInstanceIDService">
+        <service android:name=".FirebaseNotificationInstanceIDService" >
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
@@ -35,6 +31,12 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/main_widget_info" />
+        </receiver>
+        <receiver
+            android:name="receivers.ConnectivityChangeReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
         </receiver>
     </application>
 
