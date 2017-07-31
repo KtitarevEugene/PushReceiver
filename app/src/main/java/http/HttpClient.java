@@ -1,50 +1,69 @@
 package http;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.Objects;
 
 /**
  * Created by ektitarev on 31.07.17.
  */
-public class HttpClient<T extends Object> {
+public class HttpClient<V, T> {
+
+    private static final String LOGCAT = HttpClient.class.getName();
 
     static final int TIMEOUT = 60000;
 
-    public void sendPostRequest (String urlString, T data) {
+    public V sendPostRequest (String urlString, T data) {
+        V response = null;
         try {
             URL url = new URL(urlString);
 
             HttpURLConnection connection = getHttpURLConnection(url);
-            writeRequest(connection, convertToJson(data));
+            writeRequest(connection, serializeJson(data));
 
-            int status = connection.getResponseCode();
+            response = deserializeJson(readResponse(connection));
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
+            Log.e(LOGCAT, e.getMessage());
             e.printStackTrace();
         }
+
+        return response;
     }
 
     private HttpURLConnection getHttpURLConnection(URL url) throws IOException {
         HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-        connection.setRequestMethod("POST");
         connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
         connection.setRequestProperty("Accept", "application/json");
         connection.setConnectTimeout(TIMEOUT);
         connection.setDoOutput(true);
+        connection.setDoInput(true);
+        connection.setRequestMethod("POST");
+        connection.connect();
 
         return connection;
     }
 
-    private String convertToJson(T data) {
+    private String serializeJson(T data) {
         return new Gson().toJson(data, data.getClass());
+    }
+
+    private V deserializeJson(String json) {
+        //FIXME java.lang.ClassCastException here
+        return new Gson().fromJson(json, (Class<V>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
     }
 
     private void writeRequest(HttpURLConnection connection, String json) throws IOException {
@@ -53,5 +72,19 @@ public class HttpClient<T extends Object> {
         outStream.writeBytes(json);
         outStream.flush();
         outStream.close();
+    }
+
+    private String readResponse(HttpURLConnection connection) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(),"utf-8"));
+        String line = null;
+
+        while ((line = br.readLine()) != null) {
+            sb.append(line);
+        }
+
+        br.close();
+
+        return sb.toString();
     }
 }
