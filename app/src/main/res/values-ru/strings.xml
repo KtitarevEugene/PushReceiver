@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Приемник</string>
+    <string name="appwidget_text">Приемник</string>
+    <string name="add_widget">Добавить виджет</string>
+    <string name="notification_title">Новое оповещение</string>
+    <string name="toast_disabled">Сервисы Google отключены</string>
+    <string name="toast_missing">Сервисы Google отсутствуют</string>
+    <string name="toast_update">Сервисы Google требуется обновление</string>
+</resources>

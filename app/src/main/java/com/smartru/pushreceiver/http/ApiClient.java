@@ -8,12 +8,12 @@ import com.smartru.pushreceiver.models.TokenModel;
 public class ApiClient {
 
     public static <V> V sendToken(String token, Class classObj) {
-        String url = "http://demo5526819.mockable.io/pushtoken";
+        String url = "pushtoken";
 
         TokenModel model = new TokenModel();
         model.push_token = token;
 
-        HttpClient<V,TokenModel> client = new HttpClient<>();
+        HttpClient<V,TokenModel> client = new HttpClient<>(ApiConfig.API_HOST);
         return client.sendPostRequest(url, model, classObj);
     }
 }

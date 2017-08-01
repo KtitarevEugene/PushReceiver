@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">PushReceiver</string>
-    <string name="appwidget_text">EXAMPLE</string>
+    <string name="appwidget_text">Receiver</string>
     <string name="add_widget">Add widget</string>
     <string name="notification_title">New notification</string>
+    <string name="toast_disabled">Google services disabled</string>
+    <string name="toast_missing">Google services missing</string>
+    <string name="toast_update">Google services update required</string>
 </resources>

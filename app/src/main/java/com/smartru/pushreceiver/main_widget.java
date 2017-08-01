@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -46,13 +47,16 @@ public class main_widget extends AppWidgetProvider {
         switch(googleApiAvaibilityResult) {
             case ConnectionResult.SUCCESS:
                 context.startService(new Intent(context, FirebaseNotificationInstanceIDService.class));
-                context.startService(new Intent(context, FirebaseNotificationService.class));
+                //context.startService(new Intent(context, FirebaseNotificationService.class));
                 break;
             case ConnectionResult.SERVICE_MISSING:
+                Toast.makeText(context, R.string.toast_missing, Toast.LENGTH_LONG).show();
                 break;
             case ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED:
+                Toast.makeText(context, R.string.toast_update, Toast.LENGTH_LONG).show();
                 break;
             case ConnectionResult.SERVICE_DISABLED:
+                Toast.makeText(context, R.string.toast_disabled, Toast.LENGTH_LONG).show();
                 break;
         }
 

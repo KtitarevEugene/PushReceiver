@@ -20,12 +20,16 @@ public class HttpClient<V, T> {
 
     private static final String LOGCAT = HttpClient.class.getName();
 
-    static final int TIMEOUT = 60000;
+    private String apiHost;
+
+    public HttpClient(String host) {
+        apiHost = host;
+    }
 
     public V sendPostRequest (String urlString, T data, Class classObj) {
         V response = null;
         try {
-            URL url = new URL(urlString);
+            URL url = new URL(String.format("%s%s", apiHost, urlString));
 
             HttpURLConnection connection = getHttpURLConnection(url);
             writeRequest(connection, serializeJson(data));
@@ -43,7 +47,7 @@ public class HttpClient<V, T> {
         HttpURLConnection connection = (HttpURLConnection)url.openConnection();
         connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
         connection.setRequestProperty("Accept", "application/json");
-        connection.setConnectTimeout(TIMEOUT);
+        connection.setConnectTimeout(ApiConfig.TIMEOUT);
         connection.setDoOutput(true);
         connection.setDoInput(true);
         connection.setRequestMethod("POST");
@@ -57,7 +61,7 @@ public class HttpClient<V, T> {
     }
 
     private V deserializeJson(String json, Class<V> tClass) {
-        //FIXME java.lang.ClassCastException here
+        Log.d(LOGCAT, json);
         return new Gson().fromJson(json, tClass);
     }
 
