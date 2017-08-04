@@ -7,4 +7,5 @@
     <string name="toast_disabled">Сервисы Google отключены</string>
     <string name="toast_missing">Сервисы Google отсутствуют</string>
     <string name="toast_update">Сервисы Google требуется обновление</string>
+    <string name="main_activity_title">Настройки</string>
 </resources>
