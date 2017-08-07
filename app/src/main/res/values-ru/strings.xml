@@ -8,4 +8,16 @@
     <string name="toast_missing">Сервисы Google отсутствуют</string>
     <string name="toast_update">Сервисы Google требуется обновление</string>
     <string name="main_activity_title">Настройки</string>
+    <string name="hint_user_name">Имя пользователя</string>
+    <string name="hint_password">Пароль</string>
+    <string name="submit_button_text">Сохранить настройки</string>
+    <string name="validate_error_message">Введите имя пользователя и пароль</string>
+    <string name="error_title">Ошибка</string>
+    <string name="progress_dialog_message">Сохранение</string>
+    <string name="no_connection_message">Сеть недоступна</string>
+    <string name="submit_success">Настройки сохранены</string>
+    <string name="unknown_issue_message">Неизвестная ошибка</string>
+    <string name="token_issue_message">Неудается получить токен</string>
+
+
 </resources>

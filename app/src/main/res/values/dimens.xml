@@ -13,5 +13,11 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="login_textviews_textsize">16sp</dimen>
+    <dimen name="form_margins">30dp</dimen>
+    <dimen name="login_edittexts_height">40dp</dimen>
+    <dimen name="margin_between_fields">30dp</dimen>
+    <dimen name="margin_hint_field">10dp</dimen>
+    <dimen name="submit_button_margin">50dp</dimen>
 
 </resources>

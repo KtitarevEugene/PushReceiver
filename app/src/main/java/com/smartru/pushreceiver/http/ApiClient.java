@@ -7,13 +7,10 @@ import com.smartru.pushreceiver.models.TokenModel;
  */
 public class ApiClient {
 
-    public static <V> V sendToken(String token, Class classObj) {
-        String url = "pushtoken";
-
-        TokenModel model = new TokenModel();
-        model.push_token = token;
+    public static <V> V sendToken(TokenModel token, Class classObj) {
+        String url = "Services/AppData.asmx/pushtoken";
 
         HttpClient<V,TokenModel> client = new HttpClient<>(ApiConfig.API_HOST);
-        return client.sendPostRequest(url, model, classObj);
+        return client.sendPostRequest(url, token, classObj);
     }
 }

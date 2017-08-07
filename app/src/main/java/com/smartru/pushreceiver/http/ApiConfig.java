@@ -5,6 +5,6 @@ package com.smartru.pushreceiver.http;
  */
 public class ApiConfig
 {
-    public static final String API_HOST = "http://demo5526819.mockable.io/";
+    public static final String API_HOST = "http://92.63.111.204:8029/";
     public static final int TIMEOUT = 30000;
 }

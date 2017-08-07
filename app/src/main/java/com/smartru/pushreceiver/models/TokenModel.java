@@ -5,4 +5,6 @@ package com.smartru.pushreceiver.models;
  */
 public class TokenModel {
     public String push_token;
+    public String username;
+    public String password;
 }

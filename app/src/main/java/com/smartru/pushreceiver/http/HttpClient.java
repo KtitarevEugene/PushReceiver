@@ -3,6 +3,8 @@ package com.smartru.pushreceiver.http;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.smartru.pushreceiver.models.RequestModel;
+import com.smartru.pushreceiver.models.ResponseModel;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -32,9 +34,16 @@ public class HttpClient<V, T> {
             URL url = new URL(String.format("%s%s", apiHost, urlString));
 
             HttpURLConnection connection = getHttpURLConnection(url);
-            writeRequest(connection, serializeJson(data));
 
-            response = (V)deserializeJson(readResponse(connection), classObj);
+            RequestModel model = new RequestModel();
+            model.sJson = serializeJson(data);
+
+            writeRequest(connection, serializeJson(model));
+
+            String serializedJson = readResponse(connection);
+            ResponseModel responseModel = new Gson().fromJson(serializedJson, ResponseModel.class);
+
+            response = (V)deserializeJson(responseModel.d, classObj);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -76,7 +85,7 @@ public class HttpClient<V, T> {
     private String readResponse(HttpURLConnection connection) throws IOException {
         StringBuilder sb = new StringBuilder();
         BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(),"utf-8"));
-        String line = null;
+        String line;
 
         while ((line = br.readLine()) != null) {
             sb.append(line);

@@ -5,4 +5,15 @@
     <string name="toast_missing">Google services missing</string>
     <string name="toast_update">Google services update required</string>
     <string name="main_activity_title">Settings</string>
+    <string name="hint_user_name">User name</string>
+    <string name="hint_password">Password</string>
+    <string name="submit_button_text">Save settings</string>
+    <string name="validate_error_message">Enter user name and password</string>
+    <string name="error_title">Error</string>
+    <string name="progress_dialog_message">Saving</string>
+    <string name="no_connection_message">Network is unavailable</string>
+    <string name="submit_success">Settings saved</string>
+    <string name="unknown_issue_message">Unknown issue</string>
+    <string name="token_issue_message">Can\'t get token</string>
+
 </resources>

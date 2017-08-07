@@ -5,4 +5,5 @@ package com.smartru.pushreceiver.http;
  */
 public class BaseResponse {
     public int status;
+    public String error;
 }

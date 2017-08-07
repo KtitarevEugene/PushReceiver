@@ -21,7 +21,7 @@ public class ConnectivityChangeReceiver extends BroadcastReceiver {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         ConnectivityManager connection = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = connection.getActiveNetworkInfo();
-        if(info != null && info.isConnected()) {
+        /*if(info != null && info.isConnected()) {
             if (!pref.getBoolean(FirebaseNotificationInstanceIDService.IS_CONNECTED, false) ||
                     pref.getString(FirebaseNotificationInstanceIDService.TOKEN, "") == "") {
 
@@ -38,6 +38,6 @@ public class ConnectivityChangeReceiver extends BroadcastReceiver {
                 }
                 pref.edit().putString(FirebaseNotificationInstanceIDService.TOKEN, token).apply();
             }
-        }
+        }*/
     }
 }

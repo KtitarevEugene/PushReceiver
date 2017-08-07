@@ -22,6 +22,8 @@ public class FirebaseNotificationInstanceIDService extends FirebaseInstanceIdSer
 
     public static final String IS_CONNECTED = "is_connected";
     public static final String TOKEN = "token";
+    public static final String USER_NAME = "username";
+    public static final String PASSWORD = "password";
 
     @Override
     public void onTokenRefresh() {
@@ -30,10 +32,10 @@ public class FirebaseNotificationInstanceIDService extends FirebaseInstanceIdSer
         Log.d(LOGCAT, "onTokenRefresh");
 
         String token = FirebaseInstanceId.getInstance().getToken();
-        sendToken(token);
+        //sendToken(token);
     }
 
-    private void sendToken(String token) {
+    /*private void sendToken(String token) {
 
         ConnectivityManager connection = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connection.getActiveNetworkInfo();
@@ -51,5 +53,5 @@ public class FirebaseNotificationInstanceIDService extends FirebaseInstanceIdSer
         } else {
             pref.edit().putBoolean(IS_CONNECTED, false).apply();
         }
-    }
+    }*/
 }
