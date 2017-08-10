@@ -20,7 +20,7 @@ public class NotificationHelper
     public static Notification makeNotification(Context context, String message, String url) {
         PendingIntent pendingIntent = makePendingIntent(context, url);
 
-        Notification notification = new Notification.Builder(context)
+        return new Notification.Builder(context)
             .setContentTitle(context.getResources().getString(R.string.notification_title))
             .setSmallIcon(R.mipmap.ic_launcher)
             .setAutoCancel(true)
@@ -29,7 +29,6 @@ public class NotificationHelper
                     .bigText(message))
             .setContentIntent(pendingIntent)
             .build();
-        return notification;
     }
 
     private static PendingIntent makePendingIntent(Context context, String url) {

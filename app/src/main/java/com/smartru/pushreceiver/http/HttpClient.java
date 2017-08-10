@@ -3,15 +3,12 @@ package com.smartru.pushreceiver.http;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.smartru.pushreceiver.models.RequestModel;
 import com.smartru.pushreceiver.models.ResponseModel;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -35,10 +32,7 @@ public class HttpClient<V, T> {
 
             HttpURLConnection connection = getHttpURLConnection(url);
 
-            RequestModel model = new RequestModel();
-            model.sJson = serializeJson(data);
-
-            writeRequest(connection, serializeJson(model));
+            writeRequest(connection, serializeJson(data));
 
             String serializedJson = readResponse(connection);
             ResponseModel responseModel = new Gson().fromJson(serializedJson, ResponseModel.class);

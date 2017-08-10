@@ -4,7 +4,9 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.input.InputManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -16,10 +18,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.smartru.pushreceiver.FirebaseNotificationInstanceIDService;
 import com.smartru.pushreceiver.R;
@@ -60,17 +65,46 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        userNameField = (EditText)findViewById(R.id.user_name);
-        passwordField =  (EditText)findViewById(R.id.password);
+        hideSoftKeyboard();
+        String message = checkGoogleServicesAvaibility();
+        if(message.isEmpty()) {
+            String userName = userNameField.getText().toString().trim();
+            String pass = passwordField.getText().toString().trim();
 
-        String userName = userNameField.getText().toString().trim();
-        String pass = passwordField.getText().toString().trim();
-
-        String validateMessage = validateFields(userName, pass);
-        if (validateMessage.isEmpty()) {
-            submit(userName, pass);
+            String validateMessage = validateFields(userName, pass);
+            if (validateMessage.isEmpty()) {
+                submit(userName, pass);
+            } else {
+                createErrorDialog(validateMessage).show();
+            }
         } else {
-            createErrorDialog(validateMessage).show();
+            createErrorDialog(message).show();
+        }
+    }
+
+    private void hideSoftKeyboard() {
+        View view = getCurrentFocus();
+        if (view != null) {
+            InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            view.clearFocus();
+        }
+    }
+
+    private String checkGoogleServicesAvaibility() {
+        int googleApiAvaibilityResult = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
+
+        switch(googleApiAvaibilityResult) {
+            case ConnectionResult.SUCCESS:
+                return "";
+            case ConnectionResult.SERVICE_MISSING:
+                return getResources().getString(R.string.toast_missing);
+            case ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED:
+                return getResources().getString(R.string.toast_update);
+            case ConnectionResult.SERVICE_DISABLED:
+                return getResources().getString(R.string.toast_disabled);
+            default:
+                return getResources().getString(R.string.unknown_issue_message);
         }
     }
 
