@@ -5,7 +5,10 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.Uri;
+import android.support.v7.app.NotificationCompat;
 
 import com.smartru.pushreceiver.R;
 
@@ -20,13 +23,17 @@ public class NotificationHelper
     public static Notification makeNotification(Context context, String message, String url) {
         PendingIntent pendingIntent = makePendingIntent(context, url);
 
-        return new Notification.Builder(context)
+        Uri ringtone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        return new NotificationCompat.Builder(context)
             .setContentTitle(context.getResources().getString(R.string.notification_title))
+            .setSound(ringtone)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setAutoCancel(true)
             .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
-            .setStyle(new Notification.BigTextStyle()
+            .setStyle(new NotificationCompat.BigTextStyle()
                     .bigText(message))
+            .setContentText(message)
             .setContentIntent(pendingIntent)
             .build();
     }
